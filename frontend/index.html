@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TikTok Bot</title>
+  <style>
+    body { background: #111; color: #fff; font-family: sans-serif; padding: 50px; text-align: center; }
+    input, select, button { padding: 10px; margin: 10px; width: 300px; }
+  </style>
+</head>
+<body>
+  <h1>🔥 TikTok Bot Tool</h1>
+  <input id="videoUrl" placeholder="Enter TikTok Video URL"><br>
+  <select id="service">
+    <option value="views">Views</option>
+    <option value="likes">Likes</option>
+    <option value="followers">Followers</option>
+    <option value="shares">Shares</option>
+    <option value="favorites">Favorites</option>
+  </select><br>
+  <input id="licenseKey" placeholder="License Key (optional)"><br>
+  <button onclick="send()">Send</button>
+  <p id="response"></p>
+
+  <script>
+    async function send() {
+      const videoUrl = document.getElementById('videoUrl').value;
+      const service = document.getElementById('service').value;
+      const licenseKey = document.getElementById('licenseKey').value;
+
+      const res = await fetch('http://localhost:3000/api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ videoUrl, service, licenseKey })
+      });
+
+      const data = await res.json();
+      document.getElementById('response').innerText = data.message;
+    }
+  </script>
+</body>
+</html>
